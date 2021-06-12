@@ -1,52 +1,40 @@
-//Nativo
 const express = require("express");
-//Definir rotuer:
+
+//Exportar desde otros ficheros JS:
+const response = require("./network/response");
+
 const router = express.Router();
 
-/*
-Nomenclatura ec6:
-import express from "express";
-*/
-
-var app = express();
-
-//Se agrea el router:
+let app = express();
+app.use(express.json());
 app.use(router);
 
-/*
-//peticiones GET:
-router.get("/", (req, res) => {
-  res.send("HOla desde GET 😄");
-});
-
-//Peticiones desde POST:
-router.post("/", (req, res) => {
-  res.send("HOla desde POST 😎");
-});
-
-*/
-
-//Se pueden crear rutas y separarlas:
+//================SOLICITUDES===================
 
 router.get("/message", (req, res) => {
-  res.send("Lista de mensajes 📖");
+  response.success(req, res, "Lista de Mensajes", 201);
 });
 
 router.post("/message", (req, res) => {
-  res.send("Mensaje añadido 👍🏽");
+  if (req.query.error == "ok") {
+    //response.error(req, res, "Error simulado", 400);
+    response.error(
+      req,
+      res,
+      "Error inesperado",
+      500,
+      "Es solo una simulación de errores."
+    );
+  } else {
+    response.success(req, res, "Creado correctamente.", 201);
+  }
 });
 
-/* usando arrow function
-app.use("/", (req, res) => {
-  res.send("Buenas!");
-});
-*/
+//================ESTATICOS===================
 
-/*
-app.use("/", function (req, res) {
-  res.send("hola");
-});
-*/
+app.use("/app", express.static("public"));
+
+//================PUERTO===================
 app.listen(3000);
 
 console.log("La aplicación esta escuando en http://localhost:3000");
