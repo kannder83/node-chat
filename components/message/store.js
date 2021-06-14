@@ -12,8 +12,16 @@ const DB_NAME = "chat2";
 const DB_URL = `mongodb://${USER_DB}:${PASS_DB}@${SERVER_IP}:${PORT_DB}/${DB_NAME}`;
 
 db.Promise = global.Promise;
-db.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-console.log("[DB] Conectada con éxito.");
+db.connect(
+  DB_URL,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  (err) => {
+    if (err) {
+      return console.error("[DB] Error de conexión. ", err);
+    }
+    console.log("[DB] Conectada con éxito.");
+  }
+);
 
 //Se crea una función para agregar los mensajes al array.
 const addMessage = (message) => {
