@@ -32,5 +32,20 @@ router.post("/", (req, res) => {
     });
 });
 
+router.patch("/:id", (req, res) => {
+  //console.log(`El id de consulta es: `, req.params.id);
+
+  controller
+    .updateMessage(req.params.id, req.body.message)
+    .then((data) => {
+      response.success(req, res, data, 200);
+    })
+    .catch((err) => {
+      response.error(req, res, "Error interno.", 500, err);
+    });
+
+  //res.send("Ok");
+});
+
 //================ EXPORTAR ===================
 module.exports = router;
