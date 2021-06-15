@@ -21,9 +21,9 @@ const addMessage = (user, message) => {
   });
 };
 
-const getMessages = () => {
+const getMessages = (filterUser) => {
   return new Promise((resolve, reject) => {
-    resolve(store.list());
+    resolve(store.list(filterUser));
   });
 };
 
@@ -37,9 +37,27 @@ const updateMessage = (id, message) => {
   });
 };
 
+const deleteMessage = (id) => {
+  return new Promise(async (resolve, reject) => {
+    if (!id) {
+      return reject("Invalid ID");
+    }
+
+    store
+      .remove(id)
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
 //================ EXPORTAR ===================
 module.exports = {
   addMessage,
   getMessages,
   updateMessage,
+  deleteMessage,
 };

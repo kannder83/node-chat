@@ -10,9 +10,10 @@ const router = express.Router();
 //================ CAPA DE RED ===================
 
 router.get("/", (req, res) => {
-  //response.success(req, res, "Lista de Mensajes", 201);
+  const filterMessages = req.query.user || null;
+
   controller
-    .getMessages()
+    .getMessages(filterMessages)
     .then((messageList) => {
       response.success(req, res, messageList, 200);
     })
@@ -33,8 +34,6 @@ router.post("/", (req, res) => {
 });
 
 router.patch("/:id", (req, res) => {
-  //console.log(`El id de consulta es: `, req.params.id);
-
   controller
     .updateMessage(req.params.id, req.body.message)
     .then((data) => {
@@ -45,6 +44,17 @@ router.patch("/:id", (req, res) => {
     });
 
   //res.send("Ok");
+});
+
+router.delete("/:id", (req, res) => {
+  controller
+    .deleteMessage(req.params.id)
+    .then(() => {
+      response.success(req, res, `Mensaje ${req.params.id} eliminado.`, 200);
+    })
+    .catch((err) => {
+      response.error(req, res, "Error interno", 500, err);
+    });
 });
 
 //================ EXPORTAR ===================
