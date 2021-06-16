@@ -6,7 +6,14 @@ const Schema = mongoose.Schema;
 //Creación del esquema
 //El tipo de información que se quiere almacenar
 const mySchema = new Schema({
-  user: String,
+  chat: {
+    type: Schema.ObjectId,
+    ref: "Chat",
+  },
+  user: {
+    type: Schema.ObjectId,
+    ref: "User",
+  },
   message: {
     type: String,
     required: true,

@@ -10,6 +10,11 @@ const addUser = (name) => {
   return store.add(user);
 };
 
+const listUser = () => {
+  return store.list();
+};
+
 module.exports = {
   addUser,
+  listUser,
 };

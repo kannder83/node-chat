@@ -7,8 +7,13 @@ const addUser = (user) => {
   return myUser.save();
 };
 
+const listUser = () => {
+  return Model.find();
+};
+
 //Exportar los métodos:
 
 module.exports = {
   add: addUser,
+  list: listUser,
 };

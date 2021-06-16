@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("/", (req, res) => {
   controller
-    .addUser(req.body.name)
+    .addChat(req.body.users)
     .then((data) => {
       response.success(req, res, data, 201);
     })
@@ -14,14 +14,14 @@ router.post("/", (req, res) => {
     });
 });
 
-router.get("/", (req, res) => {
+router.get("/:userId", (req, res) => {
   controller
-    .listUser()
+    .listChats(req.params.userId)
     .then((users) => {
       response.success(req, res, users, 200);
     })
     .catch((err) => {
-      response.error(req, res, "Internal error", 500, err);
+      response.error(req, res, "Interal error", 500, err);
     });
 });
 
