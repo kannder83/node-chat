@@ -19,6 +19,7 @@ const mySchema = new Schema({
     required: true,
   },
   date: Date,
+  file: String,
 });
 
 //Creación de un modelo:

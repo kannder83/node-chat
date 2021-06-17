@@ -7,7 +7,7 @@ const router = express.Router();
 
 //================ GUARDAR ARCHIVO ===================
 const upload = multer({
-  dest: "uploads/",
+  dest: "public/files/",
 });
 
 //================ CAPA DE RED ===================
@@ -27,7 +27,7 @@ router.get("/", (req, res) => {
 
 router.post("/", upload.single("file"), (req, res) => {
   controller
-    .addMessage(req.body.chat, req.body.user, req.body.message)
+    .addMessage(req.body.chat, req.body.user, req.body.message, req.file)
     .then((fullMessage) => {
       response.success(req, res, fullMessage, 201);
     })
