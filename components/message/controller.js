@@ -1,5 +1,7 @@
 const store = require("./store");
 
+const socket = require("../../socket").socket;
+
 const addMessage = (chat, user, message, file) => {
   //Se crea una promesa para regresar los datos:
   return new Promise((resolve, reject) => {
@@ -24,6 +26,9 @@ const addMessage = (chat, user, message, file) => {
     };
     //Se almacena el mensaje
     store.add(fullMessage);
+    //Se envia el mensaje por websocket:
+    socket.io.emit("message", fullMessage);
+
     //Resolver la promesa:
     resolve(fullMessage);
   });

@@ -1,5 +1,8 @@
 const express = require("express");
+const app = express();
+const server = require("http").Server(app);
 
+const socket = require("./socket");
 const db = require("./db");
 
 const router = require("./network/routes");
@@ -15,10 +18,11 @@ const DB_URL = `mongodb://${USER_DB}:${PASS_DB}@${SERVER_IP}:${PORT_DB}/${DB_NAM
 //Conexión al a base de Datos:
 db(DB_URL);
 
-let app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(router);
+
+socket.connect(server);
+
 router(app);
 
 //================ESTATICOS===================
@@ -26,6 +30,6 @@ router(app);
 app.use("/app", express.static("public"));
 
 //================PUERTO===================
-app.listen(3000);
-
-console.log("La aplicación esta escuchando en http://localhost:3000");
+server.listen(3000, () => {
+  console.log("La aplicación esta escuchando en http://localhost:3000");
+});
